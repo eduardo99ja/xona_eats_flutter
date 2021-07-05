@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:xona_eats/src/login/login_page.dart';
+import 'package:xona_eats/src/utils/my_colors.dart';
 
 void main() {
   runApp(MyApp());
@@ -22,6 +23,7 @@ class _MyAppState extends State<MyApp> {
       routes: {
         'login': (BuildContext context) => LoginPage(),
       },
+      theme: ThemeData(primaryColor: MyColors.primaryColor),
     );
   }
 }
