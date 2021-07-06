@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:lottie/lottie.dart';
+import 'package:xona_eats/src/login/login_controller.dart';
 import 'package:xona_eats/src/utils/my_colors.dart';
 
 class LoginPage extends StatefulWidget {
@@ -11,6 +13,16 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  LoginController _con = new LoginController();
+
+  @override
+  void initState() {
+    super.initState();
+    SchedulerBinding.instance!.addPostFrameCallback((timeStamp) {
+      _con.init(context);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -148,11 +160,14 @@ class _LoginPageState extends State<LoginPage> {
           SizedBox(
             width: 7.0,
           ),
-          Text(
-            'Registrate',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: MyColors.primaryColor,
+          GestureDetector(
+            onTap: _con.goToRegisterPage,
+            child: Text(
+              'Registrate',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: MyColors.primaryColor,
+              ),
             ),
           ),
         ],
