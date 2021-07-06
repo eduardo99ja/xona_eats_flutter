@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:xona_eats/src/utils/my_colors.dart';
 
 class LoginPage extends StatefulWidget {
@@ -29,7 +30,8 @@ class _LoginPageState extends State<LoginPage> {
             ),
             Column(
               children: [
-                _imageBanner(),
+                // _imageBanner(),
+                _lottieAnimation(),
                 _textFieldEmail(),
                 _textFieldPassword(),
                 _buttonLogin(),
@@ -41,6 +43,16 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
+
+  Widget _lottieAnimation() => Container(
+        margin: EdgeInsets.only(top: 150.0, bottom: MediaQuery.of(context).size.height * 0.17),
+        child: Lottie.asset(
+          'assets/json/delivery.json',
+          width: 350.0,
+          height: 200.0,
+          fit: BoxFit.fill,
+        ),
+      );
 
   Widget _circleLogin() => Container(
         width: 240.0,
