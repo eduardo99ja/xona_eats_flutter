@@ -62,7 +62,12 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget _textLogin() => Text(
         'LOGIN',
-        style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 22.0),
+        style: TextStyle(
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+          fontSize: 22.0,
+          fontFamily: 'NimbusSans',
+        ),
       );
 
   Widget _imageBanner() => Container(
