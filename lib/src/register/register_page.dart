@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:xona_eats/src/register/register_controller.dart';
 import 'package:xona_eats/src/utils/my_colors.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -9,6 +11,16 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+  RegisterController _con = new RegisterController();
+
+  @override
+  void initState() {
+    super.initState();
+    SchedulerBinding.instance!.addPostFrameCallback((timeStamp) {
+      _con.init(context);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -97,6 +109,8 @@ class _RegisterPageState extends State<RegisterPage> {
           borderRadius: BorderRadius.circular(30.0),
         ),
         child: TextField(
+          controller: _con.emailController,
+          keyboardType: TextInputType.emailAddress,
           decoration: InputDecoration(
             hintText: 'Correo electrónico',
             border: InputBorder.none,
@@ -117,6 +131,7 @@ class _RegisterPageState extends State<RegisterPage> {
           borderRadius: BorderRadius.circular(30.0),
         ),
         child: TextField(
+          controller: _con.nameController,
           decoration: InputDecoration(
             hintText: 'Nombre',
             border: InputBorder.none,
@@ -137,6 +152,7 @@ class _RegisterPageState extends State<RegisterPage> {
           borderRadius: BorderRadius.circular(30.0),
         ),
         child: TextField(
+          controller: _con.lastnameController,
           decoration: InputDecoration(
             hintText: 'Apellidos',
             border: InputBorder.none,
@@ -157,6 +173,8 @@ class _RegisterPageState extends State<RegisterPage> {
           borderRadius: BorderRadius.circular(30.0),
         ),
         child: TextField(
+          controller: _con.phoneController,
+          keyboardType: TextInputType.phone,
           decoration: InputDecoration(
             hintText: 'Telefono',
             border: InputBorder.none,
@@ -177,6 +195,7 @@ class _RegisterPageState extends State<RegisterPage> {
           borderRadius: BorderRadius.circular(30.0),
         ),
         child: TextField(
+          controller: _con.passwordController,
           decoration: InputDecoration(
             hintText: 'Contraseña',
             border: InputBorder.none,
@@ -187,6 +206,7 @@ class _RegisterPageState extends State<RegisterPage> {
               color: MyColors.primaryColor,
             ),
           ),
+          obscureText: true,
         ),
       );
 
@@ -197,6 +217,7 @@ class _RegisterPageState extends State<RegisterPage> {
           borderRadius: BorderRadius.circular(30.0),
         ),
         child: TextField(
+          controller: _con.confirmPasswordController,
           decoration: InputDecoration(
             hintText: 'Confirmar contraseña',
             border: InputBorder.none,
@@ -207,6 +228,7 @@ class _RegisterPageState extends State<RegisterPage> {
               color: MyColors.primaryColor,
             ),
           ),
+          obscureText: true,
         ),
       );
 
@@ -214,7 +236,7 @@ class _RegisterPageState extends State<RegisterPage> {
         width: double.infinity,
         margin: EdgeInsets.symmetric(horizontal: 50.0, vertical: 30.0),
         child: ElevatedButton(
-          onPressed: () {},
+          onPressed: _con.register,
           child: Text('Registrarse'),
           style: ElevatedButton.styleFrom(
             primary: MyColors.primaryColor,
