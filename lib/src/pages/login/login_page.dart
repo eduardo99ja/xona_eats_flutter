@@ -2,7 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:lottie/lottie.dart';
-import 'package:xona_eats/src/login/login_controller.dart';
+import 'package:xona_eats/src/pages/login/login_controller.dart';
+
 import 'package:xona_eats/src/utils/my_colors.dart';
 
 class LoginPage extends StatefulWidget {
