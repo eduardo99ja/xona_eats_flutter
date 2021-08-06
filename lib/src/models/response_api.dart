@@ -4,7 +4,8 @@
 
 import 'dart:convert';
 
-ResponseApi responseApiFromJson(String str) => ResponseApi.fromJson(json.decode(str));
+ResponseApi responseApiFromJson(String str) =>
+    ResponseApi.fromJson(json.decode(str));
 
 String responseApiToJson(ResponseApi data) => json.encode(data.toJson());
 
@@ -35,5 +36,6 @@ class ResponseApi {
         "message": message,
         "error": error,
         "success": success,
+        "data": data,
       };
 }
