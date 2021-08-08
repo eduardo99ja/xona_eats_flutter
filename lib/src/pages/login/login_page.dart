@@ -2,7 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:lottie/lottie.dart';
-import 'package:xona_eats/src/login/login_controller.dart';
+import 'package:xona_eats/src/pages/login/login_controller.dart';
+
 import 'package:xona_eats/src/utils/my_colors.dart';
 
 class LoginPage extends StatefulWidget {
@@ -100,6 +101,8 @@ class _LoginPageState extends State<LoginPage> {
           borderRadius: BorderRadius.circular(30.0),
         ),
         child: TextField(
+          controller: _con.emailController,
+          keyboardType: TextInputType.emailAddress,
           decoration: InputDecoration(
             hintText: 'Correo electrónico',
             border: InputBorder.none,
@@ -120,6 +123,7 @@ class _LoginPageState extends State<LoginPage> {
           borderRadius: BorderRadius.circular(30.0),
         ),
         child: TextField(
+          controller: _con.passwordController,
           decoration: InputDecoration(
             hintText: 'Contraseña',
             border: InputBorder.none,
@@ -130,6 +134,7 @@ class _LoginPageState extends State<LoginPage> {
               color: MyColors.primaryColor,
             ),
           ),
+          obscureText: true,
         ),
       );
 
@@ -137,7 +142,7 @@ class _LoginPageState extends State<LoginPage> {
         width: double.infinity,
         margin: EdgeInsets.symmetric(horizontal: 50.0, vertical: 30.0),
         child: ElevatedButton(
-          onPressed: () {},
+          onPressed: _con.login,
           child: Text('Ingresar'),
           style: ElevatedButton.styleFrom(
             primary: MyColors.primaryColor,
