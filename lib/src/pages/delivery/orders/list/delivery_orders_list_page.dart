@@ -17,7 +17,7 @@ class _DeliveryOrdersListPageState extends State<DeliveryOrdersListPage> {
   void initState() {
     super.initState();
     SchedulerBinding.instance!.addPostFrameCallback((timeStamp) {
-      _con.init(context);
+      _con.init(context, refresh);
     });
   }
 
@@ -60,7 +60,7 @@ class _DeliveryOrdersListPageState extends State<DeliveryOrdersListPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Eduardo Apodaca',
+                    '${_con.user?.name ?? ''} ${_con.user?.lastname ?? ''}',
                     style: TextStyle(
                       fontSize: 18.0,
                       color: Colors.white,
@@ -69,7 +69,7 @@ class _DeliveryOrdersListPageState extends State<DeliveryOrdersListPage> {
                     maxLines: 1,
                   ),
                   Text(
-                    'eduardo1ja99@mail.com',
+                    _con.user?.email ?? '',
                     style: TextStyle(
                       fontSize: 13.0,
                       color: Colors.grey[300],
@@ -79,7 +79,7 @@ class _DeliveryOrdersListPageState extends State<DeliveryOrdersListPage> {
                     maxLines: 1,
                   ),
                   Text(
-                    '72291001568',
+                    _con.user?.phone ?? '',
                     style: TextStyle(
                       fontSize: 13.0,
                       color: Colors.grey[300],
@@ -92,7 +92,9 @@ class _DeliveryOrdersListPageState extends State<DeliveryOrdersListPage> {
                     height: 60.0,
                     margin: EdgeInsets.only(top: 10.0),
                     child: FadeInImage(
-                      image: AssetImage('assets/img/no-image.png'),
+                      image: (_con.user?.image != null)
+                          ? NetworkImage(_con.user!.image!)
+                          : AssetImage('assets/img/no-image.png') as ImageProvider,
                       fit: BoxFit.contain,
                       fadeInDuration: Duration(milliseconds: 50),
                       placeholder: AssetImage('assets/img/no-image.png'),
@@ -105,6 +107,15 @@ class _DeliveryOrdersListPageState extends State<DeliveryOrdersListPage> {
               title: Text('Editar perfil'),
               trailing: Icon(Icons.edit_outlined),
             ),
+            _con.user != null
+                ? _con.user!.roles!.length > 1
+                    ? ListTile(
+                        title: Text('Seleccionar rol'),
+                        trailing: Icon(Icons.person_outlined),
+                        onTap: _con.goToRoles,
+                      )
+                    : Container()
+                : Container(),
             ListTile(
               title: Text('Cerrar sesión'),
               trailing: Icon(Icons.power_settings_new),
@@ -113,4 +124,8 @@ class _DeliveryOrdersListPageState extends State<DeliveryOrdersListPage> {
           ],
         ),
       );
+
+  refresh() {
+    setState(() {});
+  }
 }
