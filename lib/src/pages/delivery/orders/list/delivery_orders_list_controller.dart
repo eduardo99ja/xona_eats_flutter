@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:xona_eats/src/utils/shared_pref.dart';
 
-class ClientProductListController {
+class DeliveryOrdersListController {
   late BuildContext context;
   SharedPref _sharedPref = SharedPref();
   GlobalKey<ScaffoldState> key = GlobalKey<ScaffoldState>();
