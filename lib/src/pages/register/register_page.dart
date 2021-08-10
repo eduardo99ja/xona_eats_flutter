@@ -17,7 +17,7 @@ class _RegisterPageState extends State<RegisterPage> {
   void initState() {
     super.initState();
     SchedulerBinding.instance!.addPostFrameCallback((timeStamp) {
-      _con.init(context);
+      _con.init(context, refresh);
     });
   }
 
@@ -94,13 +94,16 @@ class _RegisterPageState extends State<RegisterPage> {
         ),
       );
 
-  Widget _imageUser() {
-    return CircleAvatar(
-      backgroundImage: AssetImage('assets/img/user_profile_2.png'),
-      radius: 60.0,
-      backgroundColor: Colors.grey[200],
-    );
-  }
+  Widget _imageUser() => GestureDetector(
+        onTap: _con.showAlertDialog,
+        child: CircleAvatar(
+          backgroundImage: _con.imageFile != null
+              ? FileImage(_con.imageFile!)
+              : AssetImage('assets/img/user_profile_2.png') as ImageProvider,
+          radius: 60,
+          backgroundColor: Colors.grey[200],
+        ),
+      );
 
   Widget _textFieldEmail() => Container(
         margin: EdgeInsets.symmetric(horizontal: 50.0, vertical: 5.0),
@@ -247,4 +250,8 @@ class _RegisterPageState extends State<RegisterPage> {
           ),
         ),
       );
+
+  void refresh() {
+    setState(() {});
+  }
 }

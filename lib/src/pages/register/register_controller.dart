@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:xona_eats/src/models/response_api.dart';
 import 'package:xona_eats/src/models/user.dart';
 import 'package:xona_eats/src/provider/users_provider.dart';
 import 'package:xona_eats/src/utils/my_snackbar.dart';
+import 'package:image_picker/image_picker.dart';
 
 class RegisterController {
   late BuildContext context;
@@ -15,9 +18,13 @@ class RegisterController {
   TextEditingController confirmPasswordController = new TextEditingController();
 
   UsersProvider usersProvider = UsersProvider();
+  PickedFile? pickedFile;
+  File? imageFile;
+  late Function refresh;
 
-  Future? init(BuildContext context) {
+  Future? init(BuildContext context, Function refresh) {
     this.context = context;
+    this.refresh = refresh;
     usersProvider.init(context);
   }
 
@@ -53,13 +60,46 @@ class RegisterController {
     ResponseApi? responseApi = await usersProvider.create(user);
 
     MySnackbar.show(context, responseApi!.message!);
-    if(responseApi.success!){
-      Future.delayed(Duration(seconds: 3),(){
+    if (responseApi.success!) {
+      Future.delayed(Duration(seconds: 3), () {
         Navigator.pushReplacementNamed(context, 'login');
       });
     }
   }
-  void back(){
+
+  Future selectImage(ImageSource imageSource) async {
+    pickedFile = await ImagePicker().getImage(source: imageSource);
+    if (pickedFile != null) {
+      imageFile = File(pickedFile!.path);
+    }
+    Navigator.pop(context);
+    refresh();
+  }
+
+  showAlertDialog() {
+    Widget galleryButton = ElevatedButton(
+        onPressed: () {
+          selectImage(ImageSource.gallery);
+        },
+        child: Text('GALERIA'));
+
+    Widget cameraButton = ElevatedButton(
+        onPressed: () {
+          selectImage(ImageSource.camera);
+        },
+        child: Text('CAMARA'));
+    AlertDialog alertDialog = AlertDialog(
+      title: Text('Selecciona tu imagen'),
+      actions: [galleryButton, cameraButton],
+    );
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return alertDialog;
+        });
+  }
+
+  void back() {
     Navigator.pop(context);
   }
 }

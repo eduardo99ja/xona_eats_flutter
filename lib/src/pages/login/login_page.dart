@@ -162,6 +162,7 @@ class _LoginPageState extends State<LoginPage> {
             style: TextStyle(
               fontWeight: FontWeight.bold,
               color: MyColors.primaryColor,
+                fontSize: 17.0
             ),
           ),
           SizedBox(
@@ -174,6 +175,7 @@ class _LoginPageState extends State<LoginPage> {
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 color: MyColors.primaryColor,
+                fontSize: 17.0
               ),
             ),
           ),
