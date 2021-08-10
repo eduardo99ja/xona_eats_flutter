@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "555111179940",
+    "project_id": "delivery-app-c4c1e",
+    "storage_bucket": "delivery-app-c4c1e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:555111179940:android:ddd65bcfeef0b9c40f2831",
+        "android_client_info": {
+          "package_name": "com.apodaca.xona_eats"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "555111179940-6l8jq33cc7s67dcrachjgd3plt1eb91e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.apodaca.xona_eats",
+            "certificate_hash": "26a1136ed8275eae490afddd2a0274247bd6b85c"
+          }
+        },
+        {
+          "client_id": "555111179940-s242o3tqnr4s83t91u339h67k6h5jjbc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDNpFN_FKUn4aavc0sgXJo-RHibx5MUDP0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "555111179940-s242o3tqnr4s83t91u339h67k6h5jjbc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
