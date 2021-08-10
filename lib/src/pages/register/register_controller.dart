@@ -1,5 +1,5 @@
 import 'dart:io';
-
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:xona_eats/src/models/response_api.dart';
 import 'package:xona_eats/src/models/user.dart';
@@ -55,16 +55,27 @@ class RegisterController {
       MySnackbar.show(context, 'La contraseña debe contener al menos 6 caracteres');
       return;
     }
+    if (imageFile == null) {
+      MySnackbar.show(context, 'Selecciona una imagen');
+      return;
+    }
     User user = User(email: email, name: name, lastname: lastname, phone: phone, password: password);
 
-    ResponseApi? responseApi = await usersProvider.create(user);
+    Stream? stream = await usersProvider.createWithImage(user, imageFile!);
+    stream!.listen((res) {
+      // ResponseApi responseApi = await usersProvider.create(user);
+      ResponseApi responseApi = ResponseApi.fromJson(json.decode(res));
+      print('RESPUESTA: ${responseApi.toJson()}');
+      MySnackbar.show(context, responseApi.message!);
 
-    MySnackbar.show(context, responseApi!.message!);
-    if (responseApi.success!) {
-      Future.delayed(Duration(seconds: 3), () {
-        Navigator.pushReplacementNamed(context, 'login');
-      });
-    }
+      if (responseApi.success!) {
+        Future.delayed(Duration(seconds: 3), () {
+          Navigator.pushReplacementNamed(context, 'login');
+        });
+      } else {}
+    });
+
+
   }
 
   Future selectImage(ImageSource imageSource) async {
