@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:sn_progress_dialog/progress_dialog.dart';
 import 'package:xona_eats/src/models/response_api.dart';
 import 'package:xona_eats/src/models/user.dart';
 import 'package:xona_eats/src/provider/users_provider.dart';
@@ -22,10 +23,15 @@ class RegisterController {
   File? imageFile;
   late Function refresh;
 
+  late ProgressDialog _progressDialog;
+
+  bool isEnable = true;
+
   Future? init(BuildContext context, Function refresh) {
     this.context = context;
     this.refresh = refresh;
     usersProvider.init(context);
+    _progressDialog = ProgressDialog(context: context);
   }
 
   void register() async {
@@ -59,23 +65,26 @@ class RegisterController {
       MySnackbar.show(context, 'Selecciona una imagen');
       return;
     }
+    _progressDialog.show(max: 100, msg: 'Espere un momento...');
+    isEnable = false;
     User user = User(email: email, name: name, lastname: lastname, phone: phone, password: password);
 
     Stream? stream = await usersProvider.createWithImage(user, imageFile!);
     stream!.listen((res) {
-      // ResponseApi responseApi = await usersProvider.create(user);
+      _progressDialog.close();
+
       ResponseApi responseApi = ResponseApi.fromJson(json.decode(res));
       print('RESPUESTA: ${responseApi.toJson()}');
       MySnackbar.show(context, responseApi.message!);
 
       if (responseApi.success!) {
-        Future.delayed(Duration(seconds: 3), () {
+        Future.delayed(Duration(seconds: 2), () {
           Navigator.pushReplacementNamed(context, 'login');
         });
-      } else {}
+      } else {
+        isEnable = true;
+      }
     });
-
-
   }
 
   Future selectImage(ImageSource imageSource) async {
