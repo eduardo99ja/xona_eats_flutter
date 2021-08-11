@@ -21,9 +21,7 @@ class UsersProvider {
   Future<User?> getById(String id) async {
     try {
       Uri url = Uri.http(_url, '$_api/findById/$id');
-      Map<String, String> headers = {
-        'Content-type': 'application/json'
-      };
+      Map<String, String> headers = {'Content-type': 'application/json'};
       final res = await http.get(url, headers: headers);
 
       final data = json.decode(res.body);
@@ -85,14 +83,15 @@ class UsersProvider {
     }
   }
 
-  Future<Stream?> update(User user, File image) async {
+  Future<Stream?> update(User user, File? image) async {
     try {
       Uri url = Uri.http(_url, '$_api/update');
       final request = http.MultipartRequest('PUT', url);
-
-      request.files.add(http.MultipartFile(
-          'image', http.ByteStream(image.openRead().cast()), await image.length(),
-          filename: basename(image.path)));
+      if (image != null) {
+        request.files.add(http.MultipartFile(
+            'image', http.ByteStream(image.openRead().cast()), await image.length(),
+            filename: basename(image.path)));
+      }
 
       request.fields['user'] = json.encode(user);
       final response = await request.send(); // ENVIARA LA PETICION
