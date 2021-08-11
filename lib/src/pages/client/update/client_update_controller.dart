@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:xona_eats/src/models/response_api.dart';
 import 'package:xona_eats/src/models/user.dart';
 import 'package:xona_eats/src/provider/users_provider.dart';
@@ -59,23 +60,22 @@ class ClientUpdateController {
 
     User myUser = User(id: user!.id, name: name, lastname: lastname, phone: phone, image: user!.image);
 
-    // Stream stream = await usersProvider.update(myUser, imageFile);
-    // stream.listen((res) async {
-    //   _progressDialog.close();
-    //
-    //   // ResponseApi responseApi = await usersProvider.create(user);
-    //   ResponseApi responseApi = ResponseApi.fromJson(json.decode(res));
-    //   Fluttertoast.showToast(msg: responseApi.message);
-    //
-    //   if (responseApi.success) {
-    //     user = await usersProvider.getById(myUser.id); // OBTENIENDO EL USUARIO DE LA DB
-    //     print('Usuario obtenido: ${user.toJson()}');
-    //     _sharedPref.save('user', user.toJson());
-    //     Navigator.pushNamedAndRemoveUntil(context, 'client/products/list', (route) => false);
-    //   } else {
-    //     isEnable = true;
-    //   }
-    // });
+    Stream? stream = await usersProvider.update(myUser, imageFile!);
+    stream!.listen((res) async {
+      _progressDialog.close();
+
+      ResponseApi responseApi = ResponseApi.fromJson(json.decode(res));
+      Fluttertoast.showToast(msg: responseApi.message!);
+
+      if (responseApi.success!) {
+        // user = await usersProvider.getById(myUser.id); // OBTENIENDO EL USUARIO DE LA DB
+        // print('Usuario obtenido: ${user.toJson()}');
+        // _sharedPref.save('user', user.toJson());
+        Navigator.pushNamedAndRemoveUntil(context, 'client/products/list', (route) => false);
+      } else {
+        isEnable = true;
+      }
+    });
   }
 
   Future selectImage(ImageSource imageSource) async {
