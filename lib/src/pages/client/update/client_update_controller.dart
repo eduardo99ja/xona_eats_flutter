@@ -54,7 +54,7 @@ class ClientUpdateController {
       MySnackbar.show(context, 'Debes ingresar todos los campos');
       return;
     }
-
+//TODO: Validate image is not empty
     _progressDialog.show(max: 100, msg: 'Espere un momento...');
     isEnable = false;
 
@@ -68,9 +68,9 @@ class ClientUpdateController {
       Fluttertoast.showToast(msg: responseApi.message!);
 
       if (responseApi.success!) {
-        // user = await usersProvider.getById(myUser.id); // OBTENIENDO EL USUARIO DE LA DB
-        // print('Usuario obtenido: ${user.toJson()}');
-        // _sharedPref.save('user', user.toJson());
+        user = await usersProvider.getById(myUser.id!); // OBTENIENDO EL USUARIO DE LA DB
+        print('Usuario obtenido: ${user!.toJson()}');
+        _sharedPref.save('user', user!.toJson());
         Navigator.pushNamedAndRemoveUntil(context, 'client/products/list', (route) => false);
       } else {
         isEnable = true;

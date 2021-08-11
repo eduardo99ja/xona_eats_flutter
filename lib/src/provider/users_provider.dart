@@ -18,6 +18,23 @@ class UsersProvider {
     this.context = context;
   }
 
+  Future<User?> getById(String id) async {
+    try {
+      Uri url = Uri.http(_url, '$_api/findById/$id');
+      Map<String, String> headers = {
+        'Content-type': 'application/json'
+      };
+      final res = await http.get(url, headers: headers);
+
+      final data = json.decode(res.body);
+      User user = User.fromJson(data);
+      return user;
+    } catch (e) {
+      print('Error: $e');
+      return null;
+    }
+  }
+
   Future<ResponseApi?> create(User user) async {
     try {
       Uri uri = Uri.http(_url, '$_api/create');

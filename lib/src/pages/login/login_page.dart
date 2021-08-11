@@ -28,7 +28,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        width: double.infinity, //Todo el ancho de la pantalla
+        width: double.infinity,
         child: Stack(
           children: [
             Positioned(
@@ -85,14 +85,14 @@ class _LoginPageState extends State<LoginPage> {
         ),
       );
 
-  Widget _imageBanner() => Container(
-        margin: EdgeInsets.only(top: 100.0, bottom: MediaQuery.of(context).size.height * 0.2),
-        child: Image.asset(
-          'assets/img/delivery.png',
-          width: 200.0,
-          height: 200.0,
-        ),
-      );
+  // Widget _imageBanner() => Container(
+  //       margin: EdgeInsets.only(top: 100.0, bottom: MediaQuery.of(context).size.height * 0.2),
+  //       child: Image.asset(
+  //         'assets/img/delivery.png',
+  //         width: 200.0,
+  //         height: 200.0,
+  //       ),
+  //     );
 
   Widget _textFieldEmail() => Container(
         margin: EdgeInsets.symmetric(horizontal: 50.0, vertical: 5.0),
