@@ -37,7 +37,7 @@ class ClientUpdateController {
     user = User.fromJson(await _sharedPref.read('user'));
 
     print('TOKEN ENVIADO: ${user!.sessionToken}');
-    usersProvider.init(context);
+    usersProvider.init(context, sessionUser: user);
 
     nameController.text = user!.name!;
     lastnameController.text = user!.lastname!;
@@ -54,13 +54,13 @@ class ClientUpdateController {
       MySnackbar.show(context, 'Debes ingresar todos los campos');
       return;
     }
-//TODO: Validate image is not empty
+
     _progressDialog.show(max: 100, msg: 'Espere un momento...');
     isEnable = false;
 
     User myUser = User(id: user!.id, name: name, lastname: lastname, phone: phone, image: user!.image);
 
-    Stream? stream = await usersProvider.update(myUser, imageFile!);
+    Stream? stream = await usersProvider.update(myUser, imageFile);
     stream!.listen((res) async {
       _progressDialog.close();
 
