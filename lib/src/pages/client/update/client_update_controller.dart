@@ -37,7 +37,7 @@ class ClientUpdateController {
     user = User.fromJson(await _sharedPref.read('user'));
 
     print('TOKEN ENVIADO: ${user!.sessionToken}');
-    usersProvider.init(context);
+    usersProvider.init(context, token: user!.sessionToken);
 
     nameController.text = user!.name!;
     lastnameController.text = user!.lastname!;

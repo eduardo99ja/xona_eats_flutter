@@ -2,27 +2,35 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:xona_eats/src/api/environment.dart';
 import 'package:xona_eats/src/models/response_api.dart';
 import 'package:xona_eats/src/models/user.dart';
 import 'package:path/path.dart';
 import 'package:http/http.dart' as http;
+import 'package:xona_eats/src/utils/shared_pref.dart';
 
 class UsersProvider {
   String _url = Environment.API_DELIVERY;
   String _api = '/api/users';
 
   late BuildContext context;
+  String? token;
 
-  Future? init(BuildContext context) {
+  Future? init(BuildContext context, {String? token}) {
     this.context = context;
+    this.token = token;
   }
 
   Future<User?> getById(String id) async {
     try {
       Uri url = Uri.http(_url, '$_api/findById/$id');
-      Map<String, String> headers = {'Content-type': 'application/json'};
+      Map<String, String> headers = {'Content-type': 'application/json', 'Authorization': token!};
       final res = await http.get(url, headers: headers);
+      if (res.statusCode == 401) {
+        Fluttertoast.showToast(msg: 'Tu sesion expiro');
+        new SharedPref().logout(context);
+      }
 
       final data = json.decode(res.body);
       User user = User.fromJson(data);
@@ -87,6 +95,7 @@ class UsersProvider {
     try {
       Uri url = Uri.http(_url, '$_api/update');
       final request = http.MultipartRequest('PUT', url);
+      request.headers['Authorization'] = token!;
       if (image != null) {
         request.files.add(http.MultipartFile(
             'image', http.ByteStream(image.openRead().cast()), await image.length(),
@@ -95,6 +104,10 @@ class UsersProvider {
 
       request.fields['user'] = json.encode(user);
       final response = await request.send(); // ENVIARA LA PETICION
+      if (response.statusCode == 401) {
+        Fluttertoast.showToast(msg: 'Tu sesion expiro');
+        new SharedPref().logout(context);
+      }
 
       return response.stream.transform(utf8.decoder);
     } catch (e) {
