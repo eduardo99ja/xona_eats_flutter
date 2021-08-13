@@ -17,7 +17,7 @@ class RestaurantOrdersListController {
   }
 
   logout() {
-    _sharedPref.logout(context,user!.id!);
+    _sharedPref.logout(context, user!.id!);
   }
 
   void openDrawer() {
@@ -26,5 +26,9 @@ class RestaurantOrdersListController {
 
   goToRoles() {
     Navigator.pushNamedAndRemoveUntil(context, 'roles', (route) => false);
+  }
+
+  void goToCategoryCreate() {
+    Navigator.pushNamed(context, 'restaurant/categories/create');
   }
 }

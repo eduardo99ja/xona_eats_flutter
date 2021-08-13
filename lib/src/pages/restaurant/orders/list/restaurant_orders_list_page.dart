@@ -107,6 +107,11 @@ class _RestaurantOrdersListPageState extends State<RestaurantOrdersListPage> {
               ),
             ),
             ListTile(
+              title: Text('Crear Categoría'),
+              trailing: Icon(Icons.list_alt),
+              onTap: _con.goToCategoryCreate,
+            ),
+            ListTile(
               title: Text('Editar perfil'),
               trailing: Icon(Icons.edit_outlined),
             ),
