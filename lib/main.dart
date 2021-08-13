@@ -6,6 +6,7 @@ import 'package:xona_eats/src/pages/login/login_page.dart';
 import 'package:xona_eats/src/pages/register/register_page.dart';
 import 'package:xona_eats/src/pages/restaurant/categories/create/restaurant_categories_create_page.dart';
 import 'package:xona_eats/src/pages/restaurant/orders/list/restaurant_orders_list_page.dart';
+import 'package:xona_eats/src/pages/restaurant/products/create/restaurant_products_create_page.dart';
 import 'package:xona_eats/src/pages/roles/roles_page.dart';
 
 import 'package:xona_eats/src/utils/my_colors.dart';
@@ -35,7 +36,8 @@ class _MyAppState extends State<MyApp> {
         'client/products/list': (BuildContext context) => ClientProductsListPage(),
         'client/update': (BuildContext context) => ClientUpdatePage(),
         'restaurant/orders/list': (BuildContext context) => RestaurantOrdersListPage(),
-        'restaurant/categories/create' : (BuildContext context) => RestaurantCategoriesCreatePage(),
+        'restaurant/categories/create': (BuildContext context) => RestaurantCategoriesCreatePage(),
+        'restaurant/products/create': (BuildContext context) => RestaurantProductsCreatePage(),
         'delivery/orders/list': (BuildContext context) => DeliveryOrdersListPage(),
       },
       theme: ThemeData(primaryColor: MyColors.primaryColor),
