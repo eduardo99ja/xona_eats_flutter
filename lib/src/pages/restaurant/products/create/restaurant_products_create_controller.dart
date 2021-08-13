@@ -10,6 +10,7 @@ import 'package:xona_eats/src/models/product.dart';
 import 'package:xona_eats/src/models/response_api.dart';
 import 'package:xona_eats/src/models/user.dart';
 import 'package:xona_eats/src/provider/categories_provider.dart';
+import 'package:xona_eats/src/provider/products_provider.dart';
 import 'package:xona_eats/src/utils/my_snackbar.dart';
 import 'package:xona_eats/src/utils/shared_pref.dart';
 
@@ -23,7 +24,7 @@ class RestaurantProductsCreateController {
 
   CategoriesProvider _categoriesProvider = new CategoriesProvider();
 
-  // ProductsProvider _productsProvider = new ProductsProvider();
+  ProductsProvider _productsProvider = new ProductsProvider();
 
   User? user;
   SharedPref sharedPref = new SharedPref();
@@ -45,7 +46,7 @@ class RestaurantProductsCreateController {
     _progressDialog = new ProgressDialog(context: context);
     user = User.fromJson(await sharedPref.read('user'));
     _categoriesProvider.init(context, user!);
-    // _productsProvider.init(context, user);
+    _productsProvider.init(context, user!);
     getCategories();
   }
 
@@ -86,20 +87,22 @@ class RestaurantProductsCreateController {
     images.add(imageFile2!);
     images.add(imageFile3!);
 
-    // _progressDialog.show(max: 100, msg: 'Espere un momento');
-    // Stream stream = await _productsProvider.create(product, images);
-    // stream.listen((res) {
-    //   _progressDialog.close();
-    //
-    //   ResponseApi responseApi = ResponseApi.fromJson(json.decode(res));
-    //   MySnackbar.show(context, responseApi.message!);
-    //
-    //   if (responseApi.success) {
-    //     resetValues();
-    //   }
-    // });
+    _progressDialog.show(max: 100, msg: 'Espere un momento');
+    Stream? stream = await _productsProvider.create(product, images);
+    if (stream != null) {
+      stream.listen((res) {
+        _progressDialog.close();
 
-    // print('Formulario Producto: ${product.toJson()}');
+        ResponseApi? responseApi = ResponseApi.fromJson(json.decode(res));
+        MySnackbar.show(context, responseApi.message!);
+
+        if (responseApi.success!) {
+          resetValues();
+        }
+      });
+    }
+
+    print('Formulario Producto: ${product.toJson()}');
   }
 
   void resetValues() {
