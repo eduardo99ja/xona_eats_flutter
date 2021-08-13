@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:xona_eats/src/models/category.dart';
 import 'package:xona_eats/src/pages/client/products/list/client_products_list_controller.dart';
 import 'package:xona_eats/src/utils/my_colors.dart';
 
@@ -23,31 +24,42 @@ class _ClientProductsListPageState extends State<ClientProductsListPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: _con.key,
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(170),
-        child: AppBar(
-          automaticallyImplyLeading: false,
-          backgroundColor: Colors.white,
-          actions: [_shoppingBag()],
-          flexibleSpace: Column(
-            children: [
-              SizedBox(height: 40),
-              _menuDrawer(),
-              SizedBox(height: 20),
-              _textFieldSearch(),
-            ],
+    return DefaultTabController(
+      length: _con.categories.length,
+      child: Scaffold(
+        key: _con.key,
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(170),
+          child: AppBar(
+            automaticallyImplyLeading: false,
+            backgroundColor: Colors.white,
+            actions: [_shoppingBag()],
+            flexibleSpace: Column(
+              children: [
+                SizedBox(height: 40),
+                _menuDrawer(),
+                SizedBox(height: 20),
+                _textFieldSearch(),
+              ],
+            ),
+            bottom: TabBar(
+              indicatorColor: MyColors.primaryColor,
+              labelColor: Colors.black,
+              unselectedLabelColor: Colors.grey[400],
+              isScrollable: true,
+              tabs: List<Widget>.generate(_con.categories.length, (index) {
+                return Tab(
+                  child: Text(_con.categories[index].name ?? ''),
+                );
+              }),
+            ),
           ),
         ),
-      ),
-      drawer: _drawer(),
-      body: Center(
-        child: ElevatedButton(
-          child: Text(
-            'Cerrar sesión',
-          ),
-          onPressed: _con.logout,
+        drawer: _drawer(),
+        body: TabBarView(
+          children: _con.categories.map((Category category) {
+            return Text('Hola');
+          }).toList(),
         ),
       ),
     );
