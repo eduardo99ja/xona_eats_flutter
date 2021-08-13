@@ -7,7 +7,6 @@ import 'package:xona_eats/src/models/category.dart';
 import 'package:xona_eats/src/pages/restaurant/products/create/restaurant_products_create_controller.dart';
 import 'package:xona_eats/src/utils/my_colors.dart';
 
-
 class RestaurantProductsCreatePage extends StatefulWidget {
   const RestaurantProductsCreatePage({Key? key}) : super(key: key);
 
@@ -16,13 +15,10 @@ class RestaurantProductsCreatePage extends StatefulWidget {
 }
 
 class _RestaurantProductsCreatePageState extends State<RestaurantProductsCreatePage> {
-
   RestaurantProductsCreateController _con = new RestaurantProductsCreateController();
-
 
   @override
   void initState() {
-
     super.initState();
     SchedulerBinding.instance!.addPostFrameCallback((timeStamp) {
       _con.init(context, refresh);
@@ -33,7 +29,11 @@ class _RestaurantProductsCreatePageState extends State<RestaurantProductsCreateP
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Nueva producto'),
+        iconTheme: IconThemeData(color: Colors.white),
+        title: Text(
+          'Nuevo producto',
+          style: TextStyle(color: Colors.white),
+        ),
       ),
       body: ListView(
         children: [
@@ -64,10 +64,7 @@ class _RestaurantProductsCreatePageState extends State<RestaurantProductsCreateP
     return Container(
       padding: EdgeInsets.all(10),
       margin: EdgeInsets.symmetric(horizontal: 30, vertical: 5),
-      decoration: BoxDecoration(
-          color: MyColors.primaryOpacityColor,
-          borderRadius: BorderRadius.circular(30)
-      ),
+      decoration: BoxDecoration(color: MyColors.primaryOpacityColor, borderRadius: BorderRadius.circular(30)),
       child: TextField(
         controller: _con.nameController,
         maxLines: 1,
@@ -76,14 +73,11 @@ class _RestaurantProductsCreatePageState extends State<RestaurantProductsCreateP
             hintText: 'Nombre de la producto',
             border: InputBorder.none,
             contentPadding: EdgeInsets.all(15),
-            hintStyle: TextStyle(
-                color: MyColors.primaryColorDark
-            ),
+            hintStyle: TextStyle(color: MyColors.primaryColorDark),
             suffixIcon: Icon(
               Icons.local_pizza,
               color: MyColors.primaryColor,
-            )
-        ),
+            )),
       ),
     );
   }
@@ -92,10 +86,7 @@ class _RestaurantProductsCreatePageState extends State<RestaurantProductsCreateP
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10),
       margin: EdgeInsets.symmetric(horizontal: 30, vertical: 5),
-      decoration: BoxDecoration(
-          color: MyColors.primaryOpacityColor,
-          borderRadius: BorderRadius.circular(30)
-      ),
+      decoration: BoxDecoration(color: MyColors.primaryOpacityColor, borderRadius: BorderRadius.circular(30)),
       child: TextField(
         controller: _con.priceController,
         keyboardType: TextInputType.phone,
@@ -104,14 +95,11 @@ class _RestaurantProductsCreatePageState extends State<RestaurantProductsCreateP
             hintText: 'Precio',
             border: InputBorder.none,
             contentPadding: EdgeInsets.all(15),
-            hintStyle: TextStyle(
-                color: MyColors.primaryColorDark
-            ),
+            hintStyle: TextStyle(color: MyColors.primaryColorDark),
             suffixIcon: Icon(
               Icons.monetization_on,
               color: MyColors.primaryColor,
-            )
-        ),
+            )),
       ),
     );
   }
@@ -136,10 +124,7 @@ class _RestaurantProductsCreatePageState extends State<RestaurantProductsCreateP
                   SizedBox(width: 15),
                   Text(
                     'Categorias',
-                    style: TextStyle(
-                        color: Colors.grey,
-                        fontSize: 16
-                    ),
+                    style: TextStyle(color: Colors.grey, fontSize: 16),
                   )
                 ],
               ),
@@ -157,10 +142,7 @@ class _RestaurantProductsCreatePageState extends State<RestaurantProductsCreateP
                   isExpanded: true,
                   hint: Text(
                     'Seleccionar categoria',
-                    style: TextStyle(
-                        color: Colors.grey,
-                        fontSize: 16
-                    ),
+                    style: TextStyle(color: Colors.grey, fontSize: 16),
                   ),
                   items: _dropDownItems(categories),
                   value: _con.idCategory,
@@ -195,10 +177,7 @@ class _RestaurantProductsCreatePageState extends State<RestaurantProductsCreateP
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 30, vertical: 5),
       padding: EdgeInsets.all(10),
-      decoration: BoxDecoration(
-          color: MyColors.primaryOpacityColor,
-          borderRadius: BorderRadius.circular(30)
-      ),
+      decoration: BoxDecoration(color: MyColors.primaryOpacityColor, borderRadius: BorderRadius.circular(30)),
       child: TextField(
         controller: _con.descriptionController,
         maxLines: 3,
@@ -207,9 +186,7 @@ class _RestaurantProductsCreatePageState extends State<RestaurantProductsCreateP
           hintText: 'Descripcion del producto',
           border: InputBorder.none,
           contentPadding: EdgeInsets.all(15),
-          hintStyle: TextStyle(
-              color: MyColors.primaryColorDark
-          ),
+          hintStyle: TextStyle(color: MyColors.primaryColorDark),
           suffixIcon: Icon(
             Icons.description,
             color: MyColors.primaryColor,
@@ -226,26 +203,26 @@ class _RestaurantProductsCreatePageState extends State<RestaurantProductsCreateP
       },
       child: imageFile != null
           ? Card(
-        elevation: 3.0,
-        child: Container(
-          height: 100,
-          width: MediaQuery.of(context).size.width * 0.26,
-          child: Image.file(
-            imageFile,
-            fit: BoxFit.cover,
-          ),
-        ),
-      )
+              elevation: 3.0,
+              child: Container(
+                height: 100,
+                width: MediaQuery.of(context).size.width * 0.26,
+                child: Image.file(
+                  imageFile,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            )
           : Card(
-        elevation: 3.0,
-        child: Container(
-          height: 140,
-          width: MediaQuery.of(context).size.width * 0.26,
-          child: Image(
-            image: AssetImage('assets/img/add_image.png'),
-          ),
-        ),
-      ),
+              elevation: 3.0,
+              child: Container(
+                height: 140,
+                width: MediaQuery.of(context).size.width * 0.26,
+                child: Image(
+                  image: AssetImage('assets/img/add_image.png'),
+                ),
+              ),
+            ),
     );
   }
 
@@ -259,11 +236,8 @@ class _RestaurantProductsCreatePageState extends State<RestaurantProductsCreateP
         child: Text('Crear producto'),
         style: ElevatedButton.styleFrom(
             primary: MyColors.primaryColor,
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30)
-            ),
-            padding: EdgeInsets.symmetric(vertical: 15)
-        ),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+            padding: EdgeInsets.symmetric(vertical: 15)),
       ),
     );
   }
@@ -271,5 +245,4 @@ class _RestaurantProductsCreatePageState extends State<RestaurantProductsCreateP
   void refresh() {
     setState(() {});
   }
-
 }

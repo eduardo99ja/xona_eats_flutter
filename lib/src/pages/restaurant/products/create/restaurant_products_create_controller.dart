@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sn_progress_dialog/sn_progress_dialog.dart';
 import 'package:xona_eats/src/models/category.dart';
+import 'package:xona_eats/src/models/product.dart';
 import 'package:xona_eats/src/models/response_api.dart';
 import 'package:xona_eats/src/models/user.dart';
 import 'package:xona_eats/src/provider/categories_provider.dart';
@@ -18,8 +19,7 @@ class RestaurantProductsCreateController {
 
   TextEditingController nameController = new TextEditingController();
   TextEditingController descriptionController = new TextEditingController();
-  TextEditingController priceController = new TextEditingController();
-
+  TextEditingController priceController = new TextEditingController(text: '0');
 
   CategoriesProvider _categoriesProvider = new CategoriesProvider();
 
@@ -57,7 +57,7 @@ class RestaurantProductsCreateController {
   void createProduct() async {
     String name = nameController.text;
     String description = descriptionController.text;
-    double price = priceController.text as double;
+    double price = double.parse(priceController.text.toString());
 
     if (name.isEmpty || description.isEmpty || price == 0) {
       MySnackbar.show(context, 'Debe ingresar todos los campos');
@@ -74,17 +74,17 @@ class RestaurantProductsCreateController {
       return;
     }
 
-    // Product product = new Product(
-    //     name: name,
-    //     description: description,
-    //     price: price,
-    //     idCategory: int.parse(idCategory)
-    // );
+    Product product = new Product(
+      name: name,
+      description: description,
+      price: price,
+      idCategory: int.parse(idCategory!),
+    );
 
-    // List<File> images = [];
-    // images.add(imageFile1!);
-    // images.add(imageFile2!);
-    // images.add(imageFile3!);
+    List<File> images = [];
+    images.add(imageFile1!);
+    images.add(imageFile2!);
+    images.add(imageFile3!);
 
     // _progressDialog.show(max: 100, msg: 'Espere un momento');
     // Stream stream = await _productsProvider.create(product, images);
