@@ -5,7 +5,7 @@ import 'package:xona_eats/src/utils/shared_pref.dart';
 
 class ClientProductsDetailController {
 
- late BuildContext context;
+  late BuildContext context;
   late Function refresh;
 
   late Product product;
@@ -24,11 +24,14 @@ class ClientProductsDetailController {
     productPrice = product.price!;
 
     // _sharedPref.remove('order');
-    // selectedProducts = Product.fromJsonList(await _sharedPref.read('order')).toList;
+    selectedProducts = (await _sharedPref.read('order') != null) ? Product
+        .fromJsonList(await _sharedPref.read('order'))
+        .toList : [];
 
-    // selectedProducts.forEach((p) {
-    //   print('Producto seleccionado: ${p.toJson()}');
-    // });
+    // print(await _sharedPref.read('order'));
+    selectedProducts.forEach((p) {
+      print('Producto seleccionado: ${p.toJson()}');
+    });
 
     refresh();
   }
