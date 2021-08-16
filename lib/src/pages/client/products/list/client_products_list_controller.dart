@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:xona_eats/src/models/category.dart';
 import 'package:xona_eats/src/models/product.dart';
 import 'package:xona_eats/src/models/user.dart';
+import 'package:xona_eats/src/pages/client/products/detail/client_products_detail_page.dart';
 import 'package:xona_eats/src/provider/categories_provider.dart';
 import 'package:xona_eats/src/provider/products_provider.dart';
 import 'package:xona_eats/src/utils/shared_pref.dart';
@@ -39,7 +41,12 @@ class ClientProductListController {
     //   return await _productsProvider.getByCategoryAndProductName(idCategory, productName);
     // }
   }
-
+  void openBottomSheet(Product product) {
+    showMaterialModalBottomSheet(
+        context: context,
+        builder: (context) => ClientProductsDetailPage()
+    );
+  }
   logout() {
     _sharedPref.logout(context, user!.id!);
   }
