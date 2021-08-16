@@ -41,12 +41,12 @@ class ClientProductListController {
     //   return await _productsProvider.getByCategoryAndProductName(idCategory, productName);
     // }
   }
+
   void openBottomSheet(Product product) {
     showMaterialModalBottomSheet(
-        context: context,
-        builder: (context) => ClientProductsDetailPage()
-    );
+        context: context, builder: (context) => ClientProductsDetailPage(product: product));
   }
+
   logout() {
     _sharedPref.logout(context, user!.id!);
   }
