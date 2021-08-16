@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:xona_eats/src/pages/client/orders/create/client_orders_create_page.dart';
 import 'package:xona_eats/src/pages/client/products/list/client_products_list_page.dart';
 import 'package:xona_eats/src/pages/client/update/client_update_page.dart';
 import 'package:xona_eats/src/pages/delivery/orders/list/delivery_orders_list_page.dart';
@@ -35,6 +36,7 @@ class _MyAppState extends State<MyApp> {
         'roles': (BuildContext context) => RolesPage(),
         'client/products/list': (BuildContext context) => ClientProductsListPage(),
         'client/update': (BuildContext context) => ClientUpdatePage(),
+        'client/orders/create': (BuildContext context) => ClientOrdersCreatePage(),
         'restaurant/orders/list': (BuildContext context) => RestaurantOrdersListPage(),
         'restaurant/categories/create': (BuildContext context) => RestaurantCategoriesCreatePage(),
         'restaurant/products/create': (BuildContext context) => RestaurantProductsCreatePage(),

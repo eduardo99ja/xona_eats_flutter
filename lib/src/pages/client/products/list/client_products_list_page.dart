@@ -4,6 +4,7 @@ import 'package:xona_eats/src/models/category.dart';
 import 'package:xona_eats/src/models/product.dart';
 import 'package:xona_eats/src/pages/client/products/list/client_products_list_controller.dart';
 import 'package:xona_eats/src/utils/my_colors.dart';
+import 'package:xona_eats/src/widgets/no_data_widget.dart';
 
 class ClientProductsListPage extends StatefulWidget {
   const ClientProductsListPage({Key? key}) : super(key: key);
@@ -59,15 +60,25 @@ class _ClientProductsListPageState extends State<ClientProductsListPage> {
         drawer: _drawer(),
         body: TabBarView(
           children: _con.categories.map((Category category) {
-            return GridView.builder(
-                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  childAspectRatio: 0.75,
-                ),
-                itemCount: 4,
-                itemBuilder: (_, index) {
-                  return _cardProduct();
+            return FutureBuilder(
+                future: _con.getProducts(category.id!),
+                builder: (context, AsyncSnapshot<List<Product>> snapshot) {
+                  if (snapshot.hasData) {
+                    if (snapshot.data!.length > 0) {
+                      return GridView.builder(
+                          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2, childAspectRatio: 0.80),
+                          itemCount: snapshot.data?.length ?? 0,
+                          itemBuilder: (_, index) {
+                            return _cardProduct(snapshot.data![index]);
+                          });
+                    } else {
+                      return NoDataWidget(text: 'No hay productos');
+                    }
+                  } else {
+                    return NoDataWidget(text: 'No hay productos');
+                  }
                 });
           }).toList(),
         ),
@@ -170,8 +181,8 @@ class _ClientProductsListPageState extends State<ClientProductsListPage> {
 
   Widget _shoppingBag() {
     return GestureDetector(
-      // onTap: _con.goToOrderCreatePage,
-      onTap: () {},
+      onTap: _con.goToOrderCreatePage,
+      // onTap: () {},
       child: Stack(
         children: [
           Container(
@@ -221,9 +232,11 @@ class _ClientProductsListPageState extends State<ClientProductsListPage> {
         ),
       );
 
-  Widget _cardProduct() {
+  Widget _cardProduct(Product product) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        _con.openBottomSheet(product);
+      },
       child: Container(
         height: 250,
         child: Card(
@@ -257,10 +270,10 @@ class _ClientProductsListPageState extends State<ClientProductsListPage> {
                     width: MediaQuery.of(context).size.width * 0.45,
                     padding: EdgeInsets.all(20),
                     child: FadeInImage(
-                      // image: product.image1 != null
-                      //     ? NetworkImage(product.image1!)
-                      //     : AssetImage('assets/img/pizza2.png') as ImageProvider,
-                      image: AssetImage('assets/img/pizza2.png'),
+                      image: product.image1 != null
+                          ? NetworkImage(product.image1!)
+                          : AssetImage('assets/img/pizza2.png') as ImageProvider,
+                      // image: AssetImage('assets/img/pizza2.png'),
                       fit: BoxFit.contain,
                       fadeInDuration: Duration(milliseconds: 50),
                       placeholder: AssetImage('assets/img/no-image.png'),
@@ -270,8 +283,8 @@ class _ClientProductsListPageState extends State<ClientProductsListPage> {
                     margin: EdgeInsets.symmetric(horizontal: 20),
                     height: 35,
                     child: Text(
-                      // product.name ?? '',
-                      'Hamburguesadfssdfdsfdsfdsfsdfdsfsdfdsf',
+                      product.name ?? '',
+                      // 'Hamburguesadfssdfdsfdsfdsfsdfdsfsdfdsf',
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(fontSize: 15, fontFamily: 'NimbusSans'),
@@ -281,8 +294,8 @@ class _ClientProductsListPageState extends State<ClientProductsListPage> {
                   Container(
                     margin: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                     child: Text(
-                      // '${product.price ?? 0}\$',
-                      '\$${0}',
+                      '\$${product.price ?? 0}',
+                      // '\$${0}',
                       style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, fontFamily: 'NimbusSans'),
                     ),
                   )

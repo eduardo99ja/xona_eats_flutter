@@ -9,6 +9,7 @@ import 'package:path/path.dart';
 import 'package:xona_eats/src/api/environment.dart';
 import 'package:xona_eats/src/models/product.dart';
 import 'package:xona_eats/src/models/user.dart';
+import 'package:xona_eats/src/utils/shared_pref.dart';
 
 class ProductsProvider {
   String _url = Environment.API_DELIVERY;
@@ -21,28 +22,27 @@ class ProductsProvider {
     this.sessionUser = sessionUser;
   }
 
-  // Future<List<Product>> getByCategory(String idCategory) async {
-  //   try {
-  //     Uri url = Uri.http(_url, '$_api/findByCategory/$idCategory');
-  //     Map<String, String> headers = {
-  //       'Content-type': 'application/json',
-  //       'Authorization': sessionUser.sessionToken
-  //     };
-  //     final res = await http.get(url, headers: headers);
-  //
-  //     if (res.statusCode == 401) {
-  //       Fluttertoast.showToast(msg: 'Sesion expirada');
-  //       new SharedPref().logout(context, sessionUser.id);
-  //     }
-  //     final data = json.decode(res.body); // CATEGORIAS
-  //     Product product = Product.fromJsonList(data);
-  //     return product.toList;
-  //   }
-  //   catch(e) {
-  //     print('Error: $e');
-  //     return [];
-  //   }
-  // }
+  Future<List<Product>> getByCategory(String idCategory) async {
+    try {
+      Uri url = Uri.http(_url, '$_api/findByCategory/$idCategory');
+      Map<String, String> headers = {
+        'Content-type': 'application/json',
+        'Authorization': sessionUser.sessionToken!
+      };
+      final res = await http.get(url, headers: headers);
+
+      if (res.statusCode == 401) {
+        Fluttertoast.showToast(msg: 'Sesion expirada');
+        new SharedPref().logout(context, sessionUser.id!);
+      }
+      final data = json.decode(res.body); // CATEGORIAS
+      Product product = Product.fromJsonList(data);
+      return product.toList;
+    } catch (e) {
+      print('Error: $e');
+      return [];
+    }
+  }
 
   // Future<List<Product>> getByCategoryAndProductName(String idCategory, String productName) async {
   //   try {
