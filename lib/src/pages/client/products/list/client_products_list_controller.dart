@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:xona_eats/src/models/category.dart';
+import 'package:xona_eats/src/models/product.dart';
 import 'package:xona_eats/src/models/user.dart';
 import 'package:xona_eats/src/provider/categories_provider.dart';
+import 'package:xona_eats/src/provider/products_provider.dart';
 import 'package:xona_eats/src/utils/shared_pref.dart';
 
 class ClientProductListController {
@@ -11,6 +13,7 @@ class ClientProductListController {
   late Function refresh;
   User? user;
   CategoriesProvider _categoriesProvider = new CategoriesProvider();
+  ProductsProvider _productsProvider = new ProductsProvider();
   List<Category> categories = [];
 
   Future? init(BuildContext context, Function refresh) async {
@@ -18,6 +21,7 @@ class ClientProductListController {
     this.refresh = refresh;
     user = User.fromJson(await _sharedPref.read('user'));
     _categoriesProvider.init(context, user!);
+    _productsProvider.init(context, user!);
     getCategories();
     refresh();
   }
@@ -25,6 +29,15 @@ class ClientProductListController {
   void getCategories() async {
     categories = await _categoriesProvider.getAll();
     refresh();
+  }
+
+  Future<List<Product>> getProducts(String idCategory) async {
+    return await _productsProvider.getByCategory(idCategory);
+    // if (productName.isEmpty) {
+    // }
+    // else {
+    //   return await _productsProvider.getByCategoryAndProductName(idCategory, productName);
+    // }
   }
 
   logout() {
