@@ -22,6 +22,10 @@ dependencies:
   fluttertoast: ^8.0.8
   modal_bottom_sheet: ^2.0.0
   flutter_image_slideshow: ^0.1.1
+  google_maps_flutter: ^2.0.6
+  geolocator: ^7.4.0
+  location: ^4.3.0
+  geocoding: ^2.0.0
 
 
 dev_dependencies:

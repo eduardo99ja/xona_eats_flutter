@@ -1,4 +1,3 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:xona_eats/src/models/product.dart';
@@ -114,7 +113,7 @@ class _ClientOrdersCreatePageState extends State<ClientOrdersCreatePage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                product?.name ?? '',
+                product.name ?? '',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 10),
@@ -205,7 +204,7 @@ class _ClientOrdersCreatePageState extends State<ClientOrdersCreatePage> {
         Container(
           padding: EdgeInsets.symmetric(horizontal: 12, vertical: 7),
           color: Colors.grey[200],
-          child: Text('${product?.quantity ?? 0}'),
+          child: Text('${product.quantity ?? 0}'),
         ),
         GestureDetector(
           onTap: () {
