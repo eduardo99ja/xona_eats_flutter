@@ -39,31 +39,32 @@ class ClientAddressMapController {
   }
 
   Future<Null> setLocationDraggableInfo() async {
-    print('initial: $initialPosition');
+    // print('initial: $initialPosition');
 
     if (initialPosition != null) {
       double lat = initialPosition.target.latitude;
       double lng = initialPosition.target.longitude;
-      print('lat: $lat long: $lng');
+      // print('lat: $lat long: $lng');
 
-      List<Placemark> address = await placemarkFromCoordinates(lat, lng);
-      print(address);
-
-      if (address != null) {
-        if (address.length > 0) {
-          String direction = address[0].thoroughfare!;
-          String street = address[0].subThoroughfare!;
-          String city = address[0].locality!;
-          String department = address[0].administrativeArea!;
-          String country = address[0].country!;
-          addressName = '$direction #$street, $city, $department';
+      // List<Placemark> address = await placemarkFromCoordinates(lat, lng);
+      // print(address);
+      //
+      // if (address != null) {
+      //   if (address.length > 0) {
+      //     String direction = address[0].thoroughfare!;
+      //     String street = address[0].subThoroughfare!;
+      //     String city = address[0].locality!;
+      //     String department = address[0].administrativeArea!;
+      //     String country = address[0].country!;
+      //     addressName = '$direction #$street, $city, $department';
+      //     addressLatLng = new LatLng(lat, lng);
+      //     print('LAT: ${addressLatLng!.latitude}');
+      //     print('LNG: ${addressLatLng!.longitude}');
+      //
+      //     refresh();
+      //   }
+      // }
           addressLatLng = new LatLng(lat, lng);
-          print('LAT: ${addressLatLng!.latitude}');
-          print('LNG: ${addressLatLng!.longitude}');
-
-          refresh();
-        }
-      }
 
     }
   }

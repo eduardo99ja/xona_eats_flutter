@@ -22,7 +22,9 @@ class ClientOrdersCreateController {
     this.context = context;
     this.refresh = refresh;
 
-    selectedProducts = Product.fromJsonList(await _sharedPref.read('order')).toList;
+    selectedProducts = (await _sharedPref.read('order') != null)
+        ? Product.fromJsonList(await _sharedPref.read('order')).toList
+        : [];
 
     getTotal();
     refresh();
