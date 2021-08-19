@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:xona_eats/src/models/address.dart';
 import 'package:xona_eats/src/models/user.dart';
+import 'package:xona_eats/src/provider/address_provider.dart';
 import 'package:xona_eats/src/utils/shared_pref.dart';
 
-
 class ClientAddressListController {
-
   late BuildContext context;
   late Function refresh;
 
-  // List<Address> address = [];
-  // AddressProvider _addressProvider = new AddressProvider();
+  List<Address> address = [];
+  AddressProvider _addressProvider = new AddressProvider();
   User? user;
   SharedPref _sharedPref = new SharedPref();
 
@@ -25,7 +25,7 @@ class ClientAddressListController {
     this.context = context;
     this.refresh = refresh;
     user = User.fromJson(await _sharedPref.read('user'));
-    // _addressProvider.init(context, user);
+    _addressProvider.init(context, user!);
     // _ordersProvider.init(context, user);
 
     refresh();
@@ -43,27 +43,27 @@ class ClientAddressListController {
     Navigator.pushNamed(context, 'client/payments/create');
   }
 
-  void handleRadioValueChange(int value) async {
-    radioValue = value;
-    // _sharedPref.save('address', address[value]);
+  void handleRadioValueChange(int? value) async {
+    radioValue = value!;
+    _sharedPref.save('address', address[value]);
 
     refresh();
     print('Valor seleccioonado: $radioValue');
   }
 
-  // Future<List<Address>> getAddress() async {
-  //   address = await _addressProvider.getByUser(user.id);
-  //
-  //   Address a = Address.fromJson(await _sharedPref.read('address') ?? {});
-  //   int index = address.indexWhere((ad) => ad.id == a.id);
-  //
-  //   if (index != -1) {
-  //     radioValue = index;
-  //   }
-  //   print('SE GUARDO LA DIRECCION: ${a.toJson()}');
-  //
-  //   return address;
-  // }
+  Future<List<Address>> getAddress() async {
+    address = await _addressProvider.getByUser(user!.id!);
+
+    Address a = Address.fromJson(await _sharedPref.read('address') ?? {});
+    int index = address.indexWhere((ad) => ad.id == a.id);
+
+    if (index != -1) {
+      radioValue = index;
+    }
+    print('SE GUARDO LA DIRECCION: ${a.toJson()}');
+
+    return address;
+  }
 
   void goToNewAddress() async {
     var result = await Navigator.pushNamed(context, 'client/address/create');
@@ -74,5 +74,4 @@ class ClientAddressListController {
       }
     }
   }
-
 }
