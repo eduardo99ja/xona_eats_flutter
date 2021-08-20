@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:xona_eats/src/models/order.dart';
 import 'package:xona_eats/src/models/user.dart';
+import 'package:xona_eats/src/pages/restaurant/orders/detail/restaurant_orders_detail_page.dart';
 import 'package:xona_eats/src/provider/orders_provider.dart';
 import 'package:xona_eats/src/utils/shared_pref.dart';
 
@@ -30,12 +31,12 @@ class RestaurantOrdersListController {
   }
 
   void openBottomSheet(Order order) async {
-    // isUpdated = await showMaterialModalBottomSheet(
-    //     context: context, builder: (context) => RestaurantOrdersDetailPage(order: order));
-    //
-    // if (isUpdated as bool) {
-    //   refresh();
-    // }
+    isUpdated = await showMaterialModalBottomSheet(
+        context: context, builder: (context) => RestaurantOrdersDetailPage(order: order));
+
+    if (isUpdated as bool) {
+      refresh();
+    }
   }
 
   void logout() {
