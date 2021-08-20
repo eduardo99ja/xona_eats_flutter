@@ -66,20 +66,18 @@ class _ClientAddressListPageState extends State<ClientAddressListPage> {
     );
   }
 
-  Widget _buttonAccept() {
-    return Container(
-      height: 50,
-      width: double.infinity,
-      margin: EdgeInsets.symmetric(vertical: 30, horizontal: 50),
-      child: ElevatedButton(
-        onPressed: _con.createOrder,
-        child: Text('ACEPTAR'),
-        style: ElevatedButton.styleFrom(
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-            primary: MyColors.primaryColor),
-      ),
-    );
-  }
+  Widget _buttonAccept() => Container(
+        height: 50,
+        width: double.infinity,
+        margin: EdgeInsets.symmetric(vertical: 30, horizontal: 50),
+        child: ElevatedButton(
+          onPressed: _con.createOrder,
+          child: Text('ACEPTAR'),
+          style: ElevatedButton.styleFrom(
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+              primary: MyColors.primaryColor),
+        ),
+      );
 
   Widget _listAddress() => FutureBuilder(
       future: _con.getAddress(),
@@ -116,7 +114,7 @@ class _ClientAddressListPageState extends State<ClientAddressListPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    address?.address ?? '',
+                    address.address!,
                     style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
                   ),
                   Text(
