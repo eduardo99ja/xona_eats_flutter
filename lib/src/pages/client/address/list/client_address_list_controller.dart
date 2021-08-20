@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:xona_eats/src/models/address.dart';
+import 'package:xona_eats/src/models/order.dart';
+import 'package:xona_eats/src/models/product.dart';
+import 'package:xona_eats/src/models/response_api.dart';
 import 'package:xona_eats/src/models/user.dart';
 import 'package:xona_eats/src/provider/address_provider.dart';
+import 'package:xona_eats/src/provider/orders_provider.dart';
 import 'package:xona_eats/src/utils/shared_pref.dart';
 
 class ClientAddressListController {
@@ -19,27 +23,24 @@ class ClientAddressListController {
 
   Map<String, dynamic>? dataIsCreated;
 
-  // OrdersProvider _ordersProvider = new OrdersProvider();
+  OrdersProvider _ordersProvider = new OrdersProvider();
 
   Future init(BuildContext context, Function refresh) async {
     this.context = context;
     this.refresh = refresh;
     user = User.fromJson(await _sharedPref.read('user'));
     _addressProvider.init(context, user!);
-    // _ordersProvider.init(context, user);
+    _ordersProvider.init(context, user!);
 
     refresh();
   }
 
   void createOrder() async {
-    // Address a = Address.fromJson(await _sharedPref.read('address') ?? {});
-    // List<Product> selectedProducts = Product.fromJsonList(await _sharedPref.read('order')).toList;
-    // Order order = new Order(
-    //   idClient: user.id,
-    //   idAddress: a.id,
-    //   products: selectedProducts
-    // );
-    // ResponseApi responseApi = await _ordersProvider.create(order);
+    Address a = Address.fromJson(await _sharedPref.read('address') ?? {});
+    List<Product> selectedProducts = Product.fromJsonList(await _sharedPref.read('order')).toList;
+    Order order = new Order(idClient: user!.id, idAddress: a.id, products: selectedProducts);
+    ResponseApi? responseApi = await _ordersProvider.create(order);
+    print(responseApi!.message);
     Navigator.pushNamed(context, 'client/payments/create');
   }
 
