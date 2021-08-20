@@ -24,7 +24,7 @@ class RestaurantOrdersDetailController {
   Order? order;
 
   User? user;
-  List<User> users = [];
+  List<User>? users = [];
   UsersProvider _usersProvider = new UsersProvider();
   OrdersProvider _ordersProvider = new OrdersProvider();
 
@@ -71,7 +71,7 @@ class RestaurantOrdersDetailController {
   }
 
   void getUsers() async {
-    // users = await _usersProvider.getDeliveryMen();
+    users = await _usersProvider.getDeliveryMen();
     refresh();
   }
 

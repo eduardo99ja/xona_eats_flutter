@@ -64,7 +64,7 @@ class _RestaurantOrdersDetailPageState extends State<RestaurantOrdersDetailPage>
               _textDescription(),
               SizedBox(height: 15),
               _con.order!.status != 'PAGADO' ? _deliveryData() : Container(),
-              _con.order!.status == 'PAGADO' ? _dropDown(_con.users) : Container(),
+              _con.order!.status == 'PAGADO' ? _dropDown(_con.users!) : Container(),
               _textData(
                   'Cliente:', '${_con.order!.client?.name ?? ''} ${_con.order!.client?.lastname ?? ''}'),
               _textData('Entregar en:', '${_con.order!.address?.address ?? ''}'),
