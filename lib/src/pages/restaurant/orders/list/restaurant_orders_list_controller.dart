@@ -34,7 +34,7 @@ class RestaurantOrdersListController {
     isUpdated = await showMaterialModalBottomSheet(
         context: context, builder: (context) => RestaurantOrdersDetailPage(order: order));
 
-    if (isUpdated as bool) {
+    if (isUpdated != null && isUpdated == true) {
       refresh();
     }
   }
